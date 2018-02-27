@@ -1,5 +1,19 @@
 
-
+/*********************************************************************************
+* Program  :  16*2 LCD Operation Lib in 4 bit mode                             *
+* Filename :  lcd4bit.c                                          		  		 *
+* Date     :  20/07/14                                                  		 *
+* Author   :  Rishi Kasera                                                     	 *
+* Version  :  1.00                                                               *
+* Hardware :  AT MEGA 8 							             		 *
+* IDE      :  AVR STUDIO 4                                               		 *
+* Language :  Embedded C                                                         *
+* Compiler :  AVR-GCC.exe                                                        *
+*                                                                                *
+* Oscillator Frequency : 8Mhz                                              		 *
+* Dependencies         : lcd4bit.H                                               *
+* Modification History :  --                                                     *
+**********************************************************************************
 
 #define LCD_DATA_DDR     DDRD
 #define LCD_DATA_PORT    PORTD
@@ -16,6 +30,14 @@
 #include<avr/io.h>
 #include<util/delay.h>
 #include "lcd4bit.h"
+
+
+/********************************************************************************
+* Function Defination  : void LCD_Ready(void)               	           		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 
 void LCD_Ready(void)
 {	    
@@ -35,6 +57,12 @@ void LCD_Ready(void)
 	
 }
 
+/********************************************************************************
+* Function Defination  : void Init_Ports()		               	           		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void Init_Ports()
 {
 
@@ -43,6 +71,12 @@ void Init_Ports()
 }
  
 
+/********************************************************************************
+* Function Defination  : void Init_LCD()		               	           		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void Init_LCD()
 {
 	Write_Command(0x33);//?
@@ -54,7 +88,12 @@ void Init_LCD()
 	_delay_ms(1000);
 }
 
-
+/********************************************************************************
+* Function Defination  : void Write_Command(unsigned char command)	    		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void Write_Command(unsigned char command)
 {
 
@@ -83,6 +122,12 @@ void Write_Command(unsigned char command)
 }
 
 
+/********************************************************************************
+* Function Defination  : void Write_data(unsigned char data1)		       		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void Write_data(unsigned char data1)
 {
 	
@@ -109,6 +154,12 @@ void Write_data(unsigned char data1)
 }
 
 
+/********************************************************************************
+* Function Defination  : void Print_String(char *string)	              		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void Print_String(char *string)
 {
 
@@ -118,6 +169,13 @@ void Print_String(char *string)
 	}
 }
 
+
+/********************************************************************************
+* Function Defination  : void gotoXy(unsigned char  x,unsigned char y)         	*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
 void gotoXy(unsigned char  x,unsigned char y)
 {
 	if(x<40)
@@ -128,7 +186,15 @@ void gotoXy(unsigned char  x,unsigned char y)
 	}
 }
 
-void Init_Signal_Char(){
+
+/********************************************************************************
+* Function Defination  : void Init_Signal_Char()	               	      		*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
+void Init_Signal_Char()
+{
 	Write_Command(0x40);
 
 	Write_data(0x0);  //0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1f, 0x1f  1
@@ -177,7 +243,16 @@ void Init_Signal_Char(){
 	Write_data(0x1f);
 	gotoXy(0,0);
 }
-void PrintSignalChar(unsigned char strength){
+
+
+/********************************************************************************
+* Function Defination  : void PrintSignalChar(unsigned char strength)			*
+* Input Parametres     : void					                                *
+* Return Value         : void                                                   *
+* Working              :                                                		*
+********************************************************************************/
+void PrintSignalChar(unsigned char strength)
+{
 	gotoXy(15,0);
 	Write_data(strength-1);
 	gotoXy(0,0);
